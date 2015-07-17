@@ -46,17 +46,18 @@ ShiftRegister::ShiftRegister(uint8_t shcp, uint8_t stcp, uint8_t ds)
 
 void ShiftRegister::sendByte(uint8_t byte)
 {
-    for(int i=0; i<8; i++)
+    for(int i=7; i>=0; i--)
     {
-        setBit(*this->ds_port, this->ds_bit, !!((1 << i) & byte)); 
+        ShiftRegister::sendBit(!!((1 << i) & byte));
         ShiftRegister::shift();
     }
 } 
 void ShiftRegister::sendBytes(uint8_t bytes[], uint8_t nb_bytes)
 {
-    for(int i=0; i<nb_bytes; i++)
+    for(int i=nb_bytes-1; i>=0; i--) {
         this->sendByte(bytes[i]);
-    
+    }
+
     ShiftRegister::storage();
 }
 void ShiftRegister::shift()
@@ -68,4 +69,8 @@ void ShiftRegister::storage()
 {
     setBit(*this->stcp_port, this->stcp_bit, 1);
     setBit(*this->stcp_port, this->stcp_bit, 0);
+}
+void ShiftRegister::sendBit(bool bit)
+{
+    setBit(*this->ds_port, this->ds_bit, bit); 
 }

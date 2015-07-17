@@ -21,6 +21,7 @@ public:
     void sendBytes(uint8_t bytes[], uint8_t nb_bytes);
     void shift();
     void storage();
+    void sendBit(bool bit);
 protected:
     volatile uint8_t* shcp_port;
     volatile uint8_t* stcp_port;
