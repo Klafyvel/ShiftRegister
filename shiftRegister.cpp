@@ -2,44 +2,18 @@
 
 ShiftRegister::ShiftRegister(uint8_t shcp, uint8_t stcp, uint8_t ds)
 {
-    if(shcp >= 0 && shcp <= 7)
-    {
-        this->shcp_port = &PORTD;
-        this->shcp_bit = shcp;
-        DDRD |= 1<<this->shcp_bit;
-    }
-    else if (shcp >= 8 && shcp <= 13)
-    {
-        this->shcp_port = &PORTB;
-        this->shcp_bit = shcp - 8;
-        DDRB |= 1<<this->shcp_bit;
-    }
+    this->shcp_port = getPORTPtrForDigital(shcp);
+    this->shcp_bit = getBITForDigital(shcp);
+    getDDRForDigital(shcp) |= 1 << this->shcp_bit;
 
-    if(stcp >= 0 && stcp <= 7)
-    {
-        this->stcp_port = &PORTD;
-        this->stcp_bit = stcp;
-        DDRD |= 1<<this->stcp_bit;
-    }
-    else if (stcp >= 8 && stcp <= 13)
-    {
-        this->stcp_port = &PORTB;
-        this->stcp_bit = stcp - 8;
-        DDRB |= 1<<this->stcp_bit;
-    }
+    this->stcp_port = getPORTPtrForDigital(stcp);
+    this->stcp_bit = getBITForDigital(stcp);
+    getDDRForDigital(stcp) |= 1 << this->stcp_bit;
 
-    if(ds >= 0 && ds <= 7)
-    {
-        this->ds_port = &PORTD;
-        this->ds_bit = ds;
-        DDRD |= 1<<this->ds_bit;
-    }
-    else if (ds >= 8 && ds <= 13)
-    {
-        this->ds_port = &PORTB;
-        this->ds_bit = ds - 8;
-        DDRB |= 1<<this->ds_bit;
-    }
+    this->ds_port = getPORTPtrForDigital(ds);
+    this->ds_bit = getBITForDigital(ds);
+    getDDRForDigital(ds) |= 1 << this->ds_bit;
+
     setBit(*this->shcp_port, this->shcp_bit, 0);
     setBit(*this->stcp_port, this->stcp_bit, 0);
 }
