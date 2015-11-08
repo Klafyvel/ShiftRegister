@@ -31,5 +31,6 @@ protected:
     uint8_t ds_bit;
 };
 
+#include "shiftRegister.cpp"
 
 #endif
