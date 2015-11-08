@@ -1,4 +1,4 @@
-#include "shiftRegister.h"
+#include "../shiftRegister.h"
 
 const uint8_t SHCP = 6;
 const uint8_t STCP = 5;
